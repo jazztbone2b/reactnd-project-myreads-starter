@@ -8,11 +8,25 @@ import Read from './Read.js'
 import SearchButton from './SearchButton.js'
 
 class BooksApp extends React.Component {
+  state = {
+    allBooks: [],
+    currentlyReading: [],
+    wantToRead: [],
+    read: []
+  }
+  componentDidMount() {
+    BooksAPI.getAll()
+      .then((allBooks) => {
+        this.setState(() => ({
+          allBooks
+        }))
+      })
+  }
   render() {
     return (
       <div className="app">
         <Header />
-        <CurrentlyReading />
+        <CurrentlyReading allBooks={this.state.allBooks}/>
         <WantToRead />
         <Read />
         <SearchButton />
