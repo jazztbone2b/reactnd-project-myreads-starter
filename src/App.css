@@ -163,7 +163,9 @@ button:active {
 }
 
 .book-shelf-changer {
-  position: absolute;
+  position: relative;
+  float: right;
+  margin-top: -60px;
   right: 0;
   bottom: -10px;
   width: 40px;
