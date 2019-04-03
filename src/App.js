@@ -6,6 +6,8 @@ import CurrentlyReading from './CurrentlyReading.js'
 import WantToRead from './WantToRead.js'
 import Read from './Read.js'
 import SearchButton from './SearchButton.js'
+import SearchPage from './SearchPage.js'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
 class BooksApp extends React.Component {
   state = {
@@ -24,13 +26,21 @@ class BooksApp extends React.Component {
   }
   render() {
     return (
-      <div className="app">
-        <Header />
-        <CurrentlyReading allBooks={this.state.allBooks}/>
-        <WantToRead />
-        <Read />
-        <SearchButton />
-      </div>
+      <Router>
+        <div className="app">
+          <Switch>
+            <Route exact path ='/'>
+              <Header />
+              <CurrentlyReading allBooks={this.state.allBooks}/>
+              <WantToRead />
+              <Read />
+              <SearchButton />
+            </Route>
+
+            <Route exact path='/search' component={SearchPage}/>
+          </Switch>
+        </div>
+      </Router>
     )
   }
 }

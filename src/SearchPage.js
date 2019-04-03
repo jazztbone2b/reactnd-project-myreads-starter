@@ -1,15 +1,37 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+import React from 'react'
 import { Link } from 'react-router-dom'
+import * as BooksAPI from './BooksAPI'
 
-class CurrentlyReading extends Component {
+class SearchPage extends React.Component {
+    state = {
+        allBooks: []
+    }
+    componentDidMount() {
+        BooksAPI.getAll()
+          .then((allBooks) => {
+            this.setState(() => ({
+              allBooks
+            }))
+          })
+    }
     render() {
         return (
-            <div className='bookshelf'>
-                <h2 className='bookshelf-title'>Currently Reading</h2>
-                <div className='bookshelf-books'>
-                    <ol className='books-grid'>
-                        {this.props.allBooks.map((book) => (
+            <div className='search-book-bar'>
+                <div className="search-books-bar">
+                    <Link to={{
+                        pathname: '/'
+                    }}>
+                        <button className="close-search">Close</button>
+                    </Link>
+
+                    <div className="search-books-input-wrapper">
+                        <input type="text" placeholder="Search by title or author"/>
+                    </div>
+                </div>
+                
+                <div className="search-books-results">
+                    <ol className="books-grid">
+                        {this.state.allBooks.map((book) => (
                             <div className='book'>
                                 <div className=''>
                                     <li key={book.id}>
@@ -30,10 +52,10 @@ class CurrentlyReading extends Component {
                             </div>
                         ))}
                     </ol>
-                </div>
+                </div>  
             </div>
         )
     }
 }
 
-export default CurrentlyReading;
+export default SearchPage;
