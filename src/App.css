@@ -142,6 +142,7 @@ button:active {
 
 .book {
   width: 140px;
+  margin: 10px;
 }
 
 .book-title,
