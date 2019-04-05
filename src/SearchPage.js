@@ -1,8 +1,12 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import * as BooksAPI from './BooksAPI'
 
 class SearchPage extends React.Component {
+    static PropTypes = {
+        allBooks: PropTypes.array.isRequired
+    }
     state = {
         query: ''
     }
@@ -22,8 +26,8 @@ class SearchPage extends React.Component {
 
         const showingBooks = query === ''
             ? allBooks
-            : allBooks.filter((allBooks.c) = (
-                allBooks.c.title.toLowerCase().includes(query.toLowerCase())
+            : allBooks.filter((book) => (
+                book.title.toLowerCase().includes(query.toLowerCase())
             ))
 
         return (
@@ -49,7 +53,7 @@ class SearchPage extends React.Component {
                 {showingBooks.length !== allBooks.length && (
                     <div className="search-books-results">
                         <ol className="books-grid">
-                            {allBooks.map((book) => (
+                            {showingBooks.map((book) => (
                                 <div className='book' key={book.id}>
                                     <div className=''>
                                         <li>
