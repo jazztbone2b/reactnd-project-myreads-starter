@@ -37,7 +37,15 @@ class BooksApp extends React.Component {
               <SearchButton />
             </Route>
 
-            <Route exact path='/search' component={SearchPage}/>
+            {/* pass allBooks in as a prop */}
+            {/*<Route exact path='/search' component={SearchPage}/>*/}
+
+            <Route exact path='/search' render={() => (
+              <SearchPage 
+                  allBooks={this.state.allBooks}
+              />
+            )} />
+
           </Switch>
         </div>
       </Router>
