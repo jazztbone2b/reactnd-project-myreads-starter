@@ -11,16 +11,19 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
 class BooksApp extends React.Component {
   state = {
+    searchBooks: [],
     allBooks: [],
     currentlyReading: [],
     wantToRead: [],
     read: []
   }
+
+  //change this function from searchBooks back to allBooks when done testing
   componentDidMount() {
     BooksAPI.getAll()
-      .then((allBooks) => {
+      .then((searchBooks) => {
         this.setState(() => ({
-          allBooks
+          searchBooks
         }))
       })
   }
@@ -37,12 +40,9 @@ class BooksApp extends React.Component {
               <SearchButton />
             </Route>
 
-            {/* pass allBooks in as a prop */}
-            {/*<Route exact path='/search' component={SearchPage}/>*/}
-
             <Route exact path='/search' render={() => (
               <SearchPage 
-                  allBooks={this.state.allBooks}
+                  searchBooks={this.state.searchBooks}
               />
             )} />
 

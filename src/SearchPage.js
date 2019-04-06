@@ -5,10 +5,11 @@ import * as BooksAPI from './BooksAPI'
 
 class SearchPage extends React.Component {
     static PropTypes = {
-        allBooks: PropTypes.array.isRequired
+        searchBooks: PropTypes.array.isRequired
     }
     state = {
-        query: ''
+        query: '',
+        search: []
     }
     updateQuery = (query) => {
         this.setState(() => ({
@@ -21,15 +22,18 @@ class SearchPage extends React.Component {
         })
     }
     render() {
+        console.log(this.state.search)
         const { query } = this.state
-        const { allBooks } = this.props
+        const { searchBooks } = this.props
 
         const showingBooks = query === ''
-            ? allBooks
-            : allBooks.filter((book) => (
-                book.title.toLowerCase().includes(query.toLowerCase())
-            ))
-
+            ? searchBooks
+            : BooksAPI.search(query)
+                .then((search) => {
+                    this.setState(() => ({
+                        search
+                    }))
+                })
         return (
             <div className='search-book-bar'>
                 <div className="search-books-bar">
@@ -49,11 +53,10 @@ class SearchPage extends React.Component {
                     </div>
                 </div>
 
-                 //change UI based on the query string
-                {showingBooks.length !== allBooks.length ? (
+                {showingBooks.length !== searchBooks.length ? (
                     <div className="search-books-results">
                         <ol className="books-grid">
-                            {showingBooks.map((book) => (
+                            {this.state.search.map((book) => (
                                 <div className='book' key={book.id}>
                                     <div className=''>
                                         <li>
@@ -78,7 +81,7 @@ class SearchPage extends React.Component {
                 ) : 
                     <div className="search-books-results">
                         <ol className="books-grid">
-                            {allBooks.map((book) => (
+                            {searchBooks.map((book) => (
                                 <div className='book' key={book.id}>
                                     <div className=''>
                                         <li>
